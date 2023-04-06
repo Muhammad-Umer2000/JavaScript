@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+    let marks = [80, 75, 90, 65, 70];
+
+    let sum = 0;
+    for (let i = 0; i < marks.length; i++) {
+        sum += marks[i];
+    }
+    let average = sum / marks.length;
+
+    let grade;
+    if (average < 60) {
+        grade = "F";
+    } else if (average < 70) {
+        grade = "D";
+    } else if (average < 80) {
+        grade = "C";
+    } else if (average < 90) {
+        grade = "B";
+    } else {
+        grade = "A";
+    }
+
+    console.log("The average marks is: " + average.toFixed(2));
+    console.log("The corresponding grade is: " + grade);
+    </script>
+</head>
+<body>
+     <h1>Question 5</h1>
+
+</body>
+</html>
