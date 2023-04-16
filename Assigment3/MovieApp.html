@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Recommendation App</title>
+	<style>
+		/* Some basic styling */
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		input[type="submit"] {
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Movie Recommendation App</h1>
+	<form id="preferences-form">
+		<label for="genre">Genre:</label>
+		<input type="text" id="genre" name="genre" required>
+		<label for="rating">Minimum Rating:</label>
+		<input type="number" id="rating" name="rating" min="0" max="10" step="0.1" required>
+		<label for="release-year">Release Year:</label>
+		<input type="number" id="release-year" name="release-year" min="1900" max="2023" required>
+		<input type="submit" value="Get Recommendations">
+	</form>
+	<div id="recommendations"></div>
+	<script>
+		// Load the movie data from a JSON file
+		fetch('movies.json')
+			.then(response => response.json())
+			.then(movies => {
+				const recommendationsDiv = document.getElementById('recommendations');
+
+				document.getElementById('preferences-form').addEventListener('submit', event => {
+					event.preventDefault(); // prevent form submission
+
+					// Get user preferences from form inputs
+					const genre = document.getElementById('genre').value.trim().toLowerCase();
+					const rating = parseFloat(document.getElementById('rating').value);
+					const releaseYear = parseInt(document.getElementById('release-year').value);
+
+					// Filter the movies based on user preferences
+					const filteredMovies = movies.filter(movie => {
+						return movie.genre.toLowerCase().includes(genre) && movie.rating >= rating && movie.releaseYear >= releaseYear;
+					});
+
+					// Display the filtered movies as recommendations
+					if (filteredMovies.length > 0) {
+						recommendationsDiv.innerHTML = '';
+						const ul = document.createElement('ul');
+						filteredMovies.forEach(movie => {
+							const li = document.createElement('li');
+							li.textContent = movie.title;
+							ul.appendChild(li);
+						});
+						recommendationsDiv.appendChild(ul);
+					} else {
+						recommendationsDiv.textContent = 'No recommendations found';
+					}
+				});
+			});
+	</script>
+</body>
+</html>
